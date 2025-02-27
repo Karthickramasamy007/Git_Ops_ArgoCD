@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1 # This file will create ArgoCD application via CDR
+kind: Application
+metadata:
+  name: my-python-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Karthickramasamy007/argocd
+    targetRevision: HEAD
+    path: my-app
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: my-python-app
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
