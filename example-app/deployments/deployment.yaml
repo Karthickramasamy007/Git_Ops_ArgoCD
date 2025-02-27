@@ -34,7 +34,7 @@ spec:
             cpu: "500m"
         env:
         - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /secret/credentials.json  # Correct path for GCP service account
+          value: /secret/credentials.json  # Path to the service account JSON
 
         volumeMounts:  
         - name: gcp-service-account
@@ -44,10 +44,10 @@ spec:
       volumes:
       - name: gcp-service-account
         secret:
-          secretName: gcr-json-key  # Updated to use the correct secret for authentication
+          secretName: gcr-json-key  # The secret you've created for Google Artifact Registry
           items:
           - key: credentials.json
-            path: credentials.json  # Mount it as /secret/credentials.json 
+            path: credentials.json  # Mount the service account key file as credentials.json
 
       imagePullSecrets:
-      - name: gcr-json-key  # Added imagePullSecrets to pull images from Google Artifact Registry
+      - name: gcr-json-key  # Use this secret to pull the image from Artifact Registry
