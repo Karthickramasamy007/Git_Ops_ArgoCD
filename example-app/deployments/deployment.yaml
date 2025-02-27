@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: example-app
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -33,15 +33,19 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "500m"
-        volumeMounts:
-        - name: secret-volume
-          mountPath: /secrets/
-        - name: config-volume
-          mountPath: /configs/
-      volumes:
-      - name: secret-volume
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secret/credentials.json  # Correct path for GCP service account
+
+      volumeMounts:
+        - name: gcp-service-account
+          mountPath: /secret
+          readOnly: true  # Ensures security by making it read-only
+
+    volumes:
+      - name: gcp-service-account
         secret:
-          secretName: mysecret
-      - name: config-volume
-        configMap:
-          name: example-config #name of our configmap object
+          secretName: allow-gcp-resource-create-and-manage  # This should be the secret containing the service account JSON
+          items:
+            - key: credentials.json
+              path: credentials.json  # Mount it as /secret/credentials.json
