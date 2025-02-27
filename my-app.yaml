@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: myweb
-          image: europe-west1-docker.pkg.dev/dev-demo-proj-1-id/my-artifact-repo/testimg:<TAG>
+          image: europe-west1-docker.pkg.dev/dev-demo-proj-1-id/my-artifact-repo/testimg:64
           ports:
             - containerPort: 8080
           env:
