@@ -37,15 +37,15 @@ spec:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /secret/credentials.json  # Correct path for GCP service account
 
-      volumeMounts:
+        volumeMounts:  # ✅ Corrected indentation
         - name: gcp-service-account
           mountPath: /secret
           readOnly: true  # Ensures security by making it read-only
 
-    volumes:
+      volumes:
       - name: gcp-service-account
         secret:
           secretName: allow-gcp-resource-create-and-manage  # This should be the secret containing the service account JSON
           items:
-            - key: credentials.json
-              path: credentials.json  # Mount it as /secret/credentials.json
+          - key: credentials.json
+            path: credentials.json  # Mount it as /secret/credentials.json
