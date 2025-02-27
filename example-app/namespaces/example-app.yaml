@@ -4,3 +4,10 @@ metadata:
   name: my-python-app
 
 # kubectl create secret generic my-ke-secret --from-file=C:\Users\karth\Downloads\dev-demo-proj-1-id-343d99591709.json -n my-python-app
+
+# kubectl create secret docker-registry gcr-json-key \
+#   --docker-server=europe-west1-docker.pkg.dev \
+#   --docker-username=_json_key \
+#   --docker-password="$(cat dev-demo-proj-1-id-343d99591709.json)" \
+#   --docker-email=your-email@example.com \
+#   -n my-python-app

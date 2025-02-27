@@ -4,7 +4,6 @@ metadata:
   name: example-deploy
   labels:
     app: example-app
-  annotations:
 spec:
   selector:
     matchLabels:
@@ -37,7 +36,7 @@ spec:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /secret/credentials.json  # Correct path for GCP service account
 
-        volumeMounts:  # ✅ Corrected indentation
+        volumeMounts:  
         - name: gcp-service-account
           mountPath: /secret
           readOnly: true  # Ensures security by making it read-only
@@ -45,7 +44,10 @@ spec:
       volumes:
       - name: gcp-service-account
         secret:
-          secretName: allow-gcp-resource-create-and-manage  # This should be the secret containing the service account JSON
+          secretName: gcr-json-key  # Updated to use the correct secret for authentication
           items:
           - key: credentials.json
-            path: credentials.json  # Mount it as /secret/credentials.json
+            path: credentials.json  # Mount it as /secret/credentials.json 
+
+      imagePullSecrets:
+      - name: gcr-json-key  # Added imagePullSecrets to pull images from Google Artifact Registry
